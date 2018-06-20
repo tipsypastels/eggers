@@ -1,8 +1,12 @@
 class Egg
-  # Allows the seed and turn instance variables to
-  # be read, but not modified, externally.
+  # Allows the seed, turn, and hatched instance 
+  # variables to be read, but not modified, externally.
   attr_reader :seed,
-              :turn
+              :turn,
+              :hatched,
+
+              # @TODO remove this when not debugging
+              :turns_to_hatch
 
   # Creates a new egg
   def initialize(monster_type, seed, size)
@@ -17,6 +21,40 @@ class Egg
     ).to_a.sample
 
     @hatched = false
+  end
+
+  # Possible states an egg can be in, as Strings
+  # To be used in the #to_s method
+  STATES = {
+    0 => "Not close to hatching.",
+    0.5 => "Getting closer to hatching!",
+    0.7 => "Close to hatching!",
+    0.9 => "Very close to hatching!",
+    1.0 => "The monster inside is long gone."
+  }
+
+  # Converts the egg to a printable String
+  def to_s
+    # Search through STATES to find the appropriate
+    # description for the egg's current state
+    state_key = STATES.keys.reverse.detect do |percent|
+      ready_percentage >= percent
+    end
+
+    state = STATES[state_key]
+
+    desc = if @hatched
+      "A hatched eggshell remain."
+    else
+      "A mysterious egg of size #{@size}!"
+    end
+
+    # <<~ is just a fancy way of writing
+    # multiline strings
+    <<~EGG
+      #{desc}
+      #{state}
+    EGG
   end
 
   # Increments the turn counter by 1 (or a set integer)
@@ -40,7 +78,13 @@ class Egg
 
   # Whether or not the egg is ready to hatch
   def ready?
-    @turn >= @turns_to_hatch
+    ready_percentage >= 1
+  end
+
+  # Readiness of the egg to hatch
+  # Between 0 and 1
+  def ready_percentage
+    @turn.to_f / @turns_to_hatch.to_f
   end
 
   # Generates a monster
