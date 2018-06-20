@@ -1,18 +1,18 @@
 class Egg
 	attr_reader :seed,
 							:turn
-							
-	def initialize(seed)
+
+	def initialize(seed, size)
 		@seed = seed
 		@turn = 0
+    @size = size
+
+    srand(@seed)
+    @turns_to_hatch = (
+      0...(10 * @size)
+    ).to_a.sample
 
 		@hatched = false
-	end
-
-	def turns_to_hatch
-		return 0 if @hatched
-		srand(@seed)
-
 	end
 
 	def next_turn
@@ -29,10 +29,14 @@ class Egg
 	end
 
 	def ready?
-		@turn >= turns_to_hatch
+		@turn >= @turns_to_hatch
 	end
 
 	def hatch
-		Monster.new(@seed)
+    @hatched = true
+    monster = Monster.new(@seed, @size)
+
+    yield monster if block_given?
+    monster
 	end
 end
