@@ -1,0 +1,65 @@
+eye_color:
+  - blue
+  - red
+  - purple
+  - black
+  - yellow
+  - green
+  - amber
+  - grey
+
+eye_shape:
+  - round
+  - sharp
+  - oval
+
+skin_type:
+  - scaley
+  - rough fur
+  - soft fur
+  - feathers
+  - gelatinous
+  - elastic skin
+
+skin_color:
+  - bronze
+  - silver
+  - gold
+  - opalescent
+  - pink
+  - purple
+  - blue
+  - green
+  - yellow
+  - orange
+  - red
+
+nature_type:
+  - mischevious
+  - bold
+  - carefree
+  - edgy
+  - serene
+  - aggressive
+  - motherly
+
+teeth_type:
+  - blunt
+  - sharp
+  - double rows
+  - toothless
+
+abilities:
+  - can see
+  - can breed
+  - can fly
+  - can run
+  - can fight
+  - can swim
+  - can dance
+  - can breath fire
+  - can breath ice
+  - can breath thunder
+  - can ascend to heaven
+  - can go to hell
+  - can be The One
