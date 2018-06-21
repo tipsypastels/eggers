@@ -5,7 +5,14 @@ class Trait
   LIST = [
     "has scales",
     "is furry",
-    "looks vicious"
+    "looks vicious",
+    "looks cuddly",
+    "smells bad",
+    "smells nice",
+    "smells like soap",
+    "green eyes",
+    "blue eyes",
+    "purple eyes"
   ]
 
   # class << self means we're accessing Trait as

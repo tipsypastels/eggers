@@ -105,7 +105,10 @@ class Egg
   # Generates a monster
   def hatch
     @hatched = true
-    monster = Monster.new(@monster_type, @seed, @size)
+    monster = Monster.new(@monster_type, 
+      seed: @seed, 
+      size: @size
+    )
 
     @on_hatch.call(monster) if @on_hatch
     monster

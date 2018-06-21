@@ -62,7 +62,7 @@ class Monster
 
     # Generates a new seed using the XOR of this monster's
     # seed and the partner's
-    egg_seed = @seed ^ other_monster.seed
+    egg_seed = [@seed, other_monster.seed].average.round
 
     Egg.new(
       egg_type,
