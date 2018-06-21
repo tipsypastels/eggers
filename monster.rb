@@ -1,14 +1,16 @@
 class Monster
   extend MonsterMixin
-  
+
   # Allows the seed instance variable
   # to be read, but not modified, externally
   attr_reader :type, 
               :seed,
               :size
 
+  attr_accessor :nickname
+
   # Creates a new monster
-  def initialize(type, seed: rand(500), size: 1)
+  def initialize(type, seed: rand(500), size: 1, name: nil)
     # The type of a monster, as a String
     # This will probably have to become its
     # own class later, so types can merge
@@ -23,6 +25,9 @@ class Monster
     # determines how many traits it have
     @size = size
 
+    # The nickname, which only affects #to_s
+    @nickname = name
+
     # The traits, as an array of strings
     # This will also become its own class
     # eventually
@@ -31,7 +36,19 @@ class Monster
 
   # Converts a monster to a printable String
   def to_s
+    title = if @nickname
+      "\"#{@nickname}\", #{@type}"
+    else
+      @type
+    end
 
+    traits = @traits.map { |t| " - #{t}" }.join("\n")
+
+    <<~MONSTER
+      #{title}
+      Size #{@size}
+      #{traits}
+    MONSTER
   end
 
   # Breeds with another monster
