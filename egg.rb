@@ -1,4 +1,6 @@
 class Egg
+  extend MonsterMixin
+
   # Allows the seed, turn, and hatched instance 
   # variables to be read, but not modified, externally.
   attr_reader :seed,
@@ -9,7 +11,7 @@ class Egg
               :turns_to_hatch
 
   # Creates a new egg
-  def initialize(monster_type, seed, size)
+  def initialize(monster_type, seed: rand(500), size: 1)
     @monster_type = monster_type
     @seed = seed
     @turn = 0
@@ -63,7 +65,20 @@ class Egg
     return if @hatched
     @turn += by
 
+    @on_turn.call(@turn, ready_percentage) if @on_turn
     hatch_if_ready
+  end
+
+  # Saves a block to be called when the egg hatches.
+  # Passes the monster it hatches into to the block.
+  def on_hatch(&block)
+    @on_hatch = block
+  end
+
+  # saves a block to be called when the egg processes a turn
+  # Passes the current turn and ready percentage
+  def on_turn(&block)
+    @on_turn = block
   end
 
   # Methods beyond this point can only be
@@ -92,7 +107,7 @@ class Egg
     @hatched = true
     monster = Monster.new(@monster_type, @seed, @size)
 
-    yield monster if block_given?
+    @on_hatch.call(monster) if @on_hatch
     monster
   end
 end

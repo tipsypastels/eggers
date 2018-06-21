@@ -1,12 +1,14 @@
-# An instance of a monster
-
 class Monster
+  extend MonsterMixin
+  
   # Allows the seed instance variable
   # to be read, but not modified, externally
-  attr_reader :seed
+  attr_reader :type, 
+              :seed,
+              :size
 
   # Creates a new monster
-  def initialize(type, seed, size)
+  def initialize(type, seed: rand(500), size: 1)
     # The type of a monster, as a String
     # This will probably have to become its
     # own class later, so types can merge
@@ -34,8 +36,21 @@ class Monster
 
   # Breeds with another monster
   def breed_with(other_monster)
-    # Generates an egg using the XOR of this monster's
-    # RNG seed and the partner's
-    Egg.new(@seed ^ other_monster.seed)
+    # This will need to be redone later when a MonsterType class is created
+    # To allow us to compound type them rather than sampling
+    egg_type = [@type, other_monster.type].sample
+
+    # The size of the monster in the egg will be the average of both parents.
+    egg_size = [@size, other_monster.size].average.round
+
+    # Generates a new seed using the XOR of this monster's
+    # seed and the partner's
+    egg_seed = @seed ^ other_monster.seed
+
+    Egg.new(
+      egg_type,
+      size: egg_size,
+      seed: egg_seed
+    )
   end
 end
