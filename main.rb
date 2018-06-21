@@ -1,5 +1,8 @@
 require_relative 'utilities'
 %w[monster_mixin monster trait egg game].each_pass_to :require_relative
 
-Egg.Dragon
-Monster.Dragon
+drago = Monster.Dragon
+draga = Monster.Dragon
+
+egg = draga.breed_with(drago)
+puts egg

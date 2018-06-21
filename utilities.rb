@@ -4,4 +4,8 @@ class Array
       send(meth, el)
     end
   end
+
+  def average
+    reduce(:+) / size.to_f
+  end
 end

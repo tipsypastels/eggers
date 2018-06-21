@@ -4,6 +4,6 @@ module MonsterMixin
   # Egg.Dragon or Monster.Dragon to create new monsters with a slightly nicer syntax
 
   def method_missing(monster, hash = {})
-    self.new(monster, **hash)
+    new(monster, **hash)
   end
 end
